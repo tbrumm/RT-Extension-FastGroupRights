@@ -1,0 +1,50 @@
+NAME
+  RT::Extension::FastGroupRights
+
+DESCRIPTION
+  Based on an original Idea from Stephen Turner (MIT) this Extension changes
+  the handling of Group Rights Settings inside RT.
+  All GroupRights.html will be replaced by a local version within this plugin
+  to speed up the load of this page.
+
+  Inside larger RT Setups, the GroupRights Page can take a very long time,
+  depending of the amount of Groups you have inside your system. This Extension
+  only loads the System Groups and Roles by default and gives you a search box
+  for your UserDefinedGroups. After granting rights to a UserDefinedGroup,
+  this group will also displayed.
+
+  This Extension will work on the following Pages:
+  Queue -> GroupRights
+  Group -> GroupRights
+  CustomField -> GroupRights
+  Global -> GroupRights
+  RTFM -> Global -> GroupRights
+  RTFM -> Class -> GroupRights
+  AT -> Global -> GroupRights
+  AT -> Types -> GroupRights
+
+INSTALLATION
+  1. Run "perl Makefile.PL"
+
+  2. Run "make"
+
+  3. Run "make install" (you may need root permissions)
+
+  4. Additionally, if you're running 3.8, you'll need to add
+     "RT::Extension::FastGroupRights" to @Plugins in
+     etc/RT_SiteConfig.pm.  For example:
+     Set(@Plugins, qw(RT::Extension::FastGroupRights RT::FM));
+
+  6. Clear RT's mason cache and restart the web server to make sure the
+     extension is incorporated.
+   
+LICENSE
+  Under the same terms as perl itself.
+
+AUTHOR
+  Torsten Brumm <tbrumm@mac.com>
+
+THANKS
+  Ruslan Zakirov
+  Stephen Turner
+  Christian Loos

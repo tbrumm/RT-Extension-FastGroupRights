@@ -1,0 +1,62 @@
+<INPUT TYPE=HIDDEN NAME="CheckACL" VALUE="<%$ACLDesc%>">
+     <TABLE BORDER=0>
+<TR>
+<TD valign=top width="180" align="left"> 
+%  my %current_rights;
+<h3><&|/l&>Current rights</&></h3>
+% if (scalar (@$ACLs == 0)) {
+<i><&|/l&>No rights granted.</&></i> <BR>    
+% } else {
+<i>(<&|/l&>Check box to revoke right</&>)</i> <BR>
+% foreach my $right ( @$ACLs) {
+% if ($right->RightName) {
+% $current_rights{$right->RightName} = 1;
+<input type=checkbox value="<%$right->RightName%>" name="RevokeRight-<%$ACLDesc%>"> <% loc($right->RightName) %><br>
+% }
+%  }
+% }
+</TD>
+<TD valign=top>
+<h3><&|/l&>New rights</&></h3> 
+<SELECT SIZE=5  MULTIPLE  NAME="GrantRight-<%$ACLDesc%>">
+% foreach $right (sort keys %Rights) {
+% next if $current_rights{$right};
+      <OPTION VALUE="<%$right%>"  
+	><% loc($right) %></OPTION>
+% }
+<OPTION VALUE="" SELECTED><&|/l&>(no value)</&></OPTION>
+</SELECT>
+</TD>
+</TR>
+</TABLE>
+<%INIT>
+    my ($right, $ACLDesc, $AppliesTo, %Rights);
+
+    # if the principal id points to a user, we really want to point
+    # to their ACL equivalence group. The machinations we're going through
+    # lead me to start to suspect that we really want users and groups
+    # to just be the same table. or _maybe_ that we want an object db.
+    my $PrincipalId = $Principal->id;
+    if ($Principal->PrincipalType eq 'User') {
+    my $group = RT::Group->new($RT::SystemUser);
+        $group->LoadACLEquivalenceGroup($Principal);
+        $PrincipalId = $group->PrincipalId;
+    }
+
+    if (ref($Object) && UNIVERSAL::can($Object, 'AvailableRights')) { 
+        %Rights = %{$Object->AvailableRights};
+    } 
+
+        else {
+                %Rights = ( loc('System Error') => loc("No rights found") );
+        }
+        
+    $ACLDesc = "$PrincipalId-".ref($Object)."-".$Object->Id;
+</%INIT>
+    
+<%ARGS>
+$Principal => undef
+$Object =>undef
+$ACLs => undef
+</%ARGS>
+
