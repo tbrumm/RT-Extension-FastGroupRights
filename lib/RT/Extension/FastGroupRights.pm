@@ -34,7 +34,7 @@ with already granted rights and a searchbox.
 
 =head1 INSTALLATION
 
-Installation Instructions for RT-Extension-Gravatar:
+Installation Instructions for RT-Extension-FastGroupRights:
 
 	1. perl Makefile.PL
 	2. make
