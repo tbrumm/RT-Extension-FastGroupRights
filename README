@@ -22,6 +22,7 @@ DESCRIPTION
   RTFM -> Class -> GroupRights
   AT -> Global -> GroupRights
   AT -> Types -> GroupRights
+  AT -> CustomFields -> GroupRights
 
 INSTALLATION
   1. Run "perl Makefile.PL"
