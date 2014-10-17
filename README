@@ -1,5 +1,5 @@
 NAME
-  RT::Extension::FastGroupRights
+  RT::Extension::FastGroupRights - Attention: This is obsolete from RT 4.+
 
 DESCRIPTION
   Based on an original Idea from Stephen Turner (MIT) this Extension changes
